@@ -3,11 +3,14 @@ import { NavigationContainer, NavigationContainerProps } from '@react-navigation
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { StackNavigator } from './stack-navigator';
+import { AuthNavigator } from './auth-navigator';
 
 export type RootRoute =
+  | '/auth'
   | '/home';
 
 export const RootScreens: Record<RootRoute, React.ComponentType<any>> = {
+  '/auth': AuthNavigator,
   '/home': StackNavigator,
 };
 

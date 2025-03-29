@@ -6,6 +6,7 @@ import { makeLazyInject } from './inject';
 export enum AppModule {
   NAVIGATION = 'navigation',
   LOG = 'log',
+  SESSION = 'session',
 }
 
 export const container = new Container({ defaultScope: 'Singleton' });

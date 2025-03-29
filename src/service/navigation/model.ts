@@ -2,8 +2,10 @@ import React from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { StackRoute } from './navigators/stack-navigator';
+import { AuthRoute } from './navigators/auth-navigator';
 
 export type IRoute =
+  | AuthRoute
   | StackRoute;
 
 export type IRouteParams = Record<string, any>;

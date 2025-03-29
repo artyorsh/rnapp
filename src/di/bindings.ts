@@ -11,6 +11,10 @@ import { ConsoleLogTransporter } from '../service/log/transporters/console-log-t
 import { FileLogTransporter } from '../service/log/transporters/file-log-transporter';
 import { GrafanaLogTransporter } from '../service/log/transporters/grafana-log-transporter';
 import { ILogService } from '../service/log/model';
+import { ISessionService } from '../service/session/model';
+import { SessionService } from '../service/session/session.service';
+import { LocalAuthenticationProvider } from '../service/session/local-auth-provider';
+import { MMKVAuthenticationStorage } from '../service/session/mmkv-auth-storage';
 
 export const createModules = (): ContainerModule[] => {
 
@@ -39,7 +43,17 @@ export const createModules = (): ContainerModule[] => {
     });
 
     bind<INavigationService>(AppModule.NAVIGATION).toConstantValue(new NavigationService(logService));
+
     bind<ILogService>(AppModule.LOG).toConstantValue(logService);
+
+    bind<ISessionService>(AppModule.SESSION).toConstantValue(new SessionService({
+      tokenRefreshThresholdMinutes: Number(Config.RNAPP_AUTH_TOKEN_REFRESH_THRESHOLD_MINUTES) || 0,
+      authenticationProvider: new LocalAuthenticationProvider(),
+      authenticationStorage: new MMKVAuthenticationStorage({
+        encryptionKey: Config.RNAPP_STORAGE_ENCRYPTION_KEY || '',
+      }),
+      logger: logService,
+    }));
   });
 
   return [mainModule];

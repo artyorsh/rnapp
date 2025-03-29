@@ -6,6 +6,7 @@ import { RootNavigator, RootNavigatorProps } from './navigators/root-navigator';
 import { ILogService } from '../log/model';
 
 const NAVIGATION_MAP: Record<string, () => Record<IRoute, any>> = {
+  '/auth': () => require('./navigators/auth-navigator').AuthScreens,
   '/home': () => require('./navigators/stack-navigator').StackScreens,
 };
 
@@ -13,7 +14,7 @@ export class NavigationService implements INavigationService {
 
   private rootNavigator = React.createRef<NavigationContainerRef<{}>>();
 
-  private currentRoute: IRoute = '/overview';
+  private currentRoute: IRoute = '/';
 
   constructor(private log: ILogService) {}
 
