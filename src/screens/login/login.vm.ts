@@ -1,27 +1,29 @@
-
-import { AppModule, lazyInject } from '../../di/container';
 import { INavigationService } from '../../service/navigation/model';
 import { ILoginVM } from './login.component';
-import { ILogService } from '../../service/log/model';
 import { INavigationScreenLifecycle } from '../../service/navigation/components/navigation-screen.container';
 import { ILoginFormValues } from './components/login-form.component';
 import { ISessionService } from '../../service/session/model';
 
+interface ILoginOptions {
+  session: ISessionService;
+  navigation: INavigationService;
+}
+
 export class LoginVM implements ILoginVM {
 
-  @lazyInject(AppModule.NAVIGATION) private navigation!: INavigationService;
-  @lazyInject(AppModule.LOG) private log!: ILogService;
-  @lazyInject(AppModule.SESSION) private session!: ISessionService;
+  private session: ISessionService;
+  private navigation: INavigationService;
 
   public readonly title = 'Login';
 
   public readonly initialValues: ILoginFormValues = {
-    email: '',
-    password: '',
+    email: 'test@test.com',
+    password: 'password',
   };
 
-  constructor(_lifecycle: INavigationScreenLifecycle) {
-
+  constructor(_lifecycle: INavigationScreenLifecycle, options: ILoginOptions) {
+    this.session = options.session;
+    this.navigation = options.navigation;
   }
   
   public submit = (values: ILoginFormValues): void => {

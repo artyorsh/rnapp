@@ -4,14 +4,22 @@ import { INavigationScreenLifecycle, INavigationScreenLifecycleListener } from '
 import { ISplashVM } from './splash.component';
 import { ISessionService } from '../../service/session/model';
 
+interface ISplashOptions {
+  navigation: INavigationService;
+  session: ISessionService;
+}
+
 export class SplashVM implements ISplashVM, INavigationScreenLifecycleListener {
 
-  @lazyInject(AppModule.NAVIGATION) private navigation!: INavigationService;
-  @lazyInject(AppModule.SESSION) private session!: ISessionService;
+  private navigation: INavigationService;
+  private session: ISessionService;
 
   public readonly title = 'Hello';
 
-  constructor(lifecycle: INavigationScreenLifecycle) {
+  constructor(lifecycle: INavigationScreenLifecycle, options: ISplashOptions) {
+    this.navigation = options.navigation;
+    this.session = options.session;
+
     lifecycle.subscribe(this)
   }
 

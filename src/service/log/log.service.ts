@@ -1,5 +1,3 @@
-import { injectable } from 'inversify';
-
 import { ILogLevel, ILogPayload, ILogService, ILogTransporter } from './model';
 
 export interface ILogServiceOptions {
@@ -7,7 +5,6 @@ export interface ILogServiceOptions {
   transporters?: ILogTransporter[];
 }
 
-@injectable()
 export class LogService implements ILogService {
 
   private transporters: ILogTransporter[] = [];

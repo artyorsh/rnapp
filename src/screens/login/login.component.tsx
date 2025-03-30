@@ -9,6 +9,7 @@ import { NavigationBarBackAccessory } from '../../components/navigation-bar/navi
 import { Text } from '../../components/text.component';
 
 export interface ILoginVM {
+  title: string;
   initialValues: ILoginFormValues;
   submit(values: ILoginFormValues): void;
   goBack(): void;

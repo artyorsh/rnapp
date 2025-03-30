@@ -3,14 +3,18 @@ import { INavigationService } from '../../service/navigation/model';
 import { INavigationScreenLifecycle } from '../../service/navigation/components/navigation-screen.container';
 import { IWelcomeVM } from './welcome.component';
 
+interface IWelcomeOptions {
+  navigation: INavigationService;
+}
+
 export class WelcomeVM implements IWelcomeVM {
 
-  @lazyInject(AppModule.NAVIGATION) private navigation!: INavigationService;
+  private navigation: INavigationService;
 
   public readonly title = 'Welcome';
 
-  constructor(_lifecycle: INavigationScreenLifecycle) {
-
+  constructor(_lifecycle: INavigationScreenLifecycle, options: IWelcomeOptions) {
+    this.navigation = options.navigation;
   }
   
   public login = (): void => {

@@ -21,6 +21,7 @@ export const LoginForm: React.FC<Props> = ({ initialValues, onSubmit, ...props }
   return (
     <View {...props}>
       <Input 
+        testID='email-input'
         style={styles.input}
         value={email}
         placeholder='Email'
@@ -28,6 +29,7 @@ export const LoginForm: React.FC<Props> = ({ initialValues, onSubmit, ...props }
         onChangeText={setEmail}
       />
       <Input
+        testID='password-input'
         style={styles.input}
         value={password}
         placeholder='Password'
@@ -35,6 +37,7 @@ export const LoginForm: React.FC<Props> = ({ initialValues, onSubmit, ...props }
         onChangeText={setPassword}
       />
       <Button 
+        testID='submit-button'
         style={styles.submitButton}
         title='Login'
         onPress={() => onSubmit({ email, password })}

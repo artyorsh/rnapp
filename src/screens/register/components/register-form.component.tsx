@@ -20,6 +20,7 @@ export const RegisterForm: React.FC<Props> = ({ onSubmit, ...props }) => {
   return (
     <View {...props}>
       <Input 
+        testID='email-input'
         style={styles.input}
         value={email}
         placeholder='Email'
@@ -27,6 +28,7 @@ export const RegisterForm: React.FC<Props> = ({ onSubmit, ...props }) => {
         onChangeText={setEmail}
       />
       <Input
+        testID='password-input'
         style={styles.input}
         value={password}
         placeholder='Password'
@@ -34,6 +36,7 @@ export const RegisterForm: React.FC<Props> = ({ onSubmit, ...props }) => {
         onChangeText={setPassword}
       />
       <Button 
+        testID='submit-button'
         style={styles.submitButton}
         title='Register'
         onPress={() => onSubmit({ email, password })}

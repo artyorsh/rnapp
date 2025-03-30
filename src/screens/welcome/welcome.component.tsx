@@ -23,10 +23,12 @@ export const Welcome: React.FC<{ vm: IWelcomeVM }> = observer(({ vm }) => {
           {vm.title}
         </Text>
         <Button
+          testID='register-button'
           title='Register'
           onPress={() => vm.register()}
         />
         <Button
+          testID='login-button'
           title='Login'
           onPress={() => vm.login()}
         />
