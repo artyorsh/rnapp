@@ -1,16 +1,13 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { OverviewContainer } from '../../../screens/overview/overview.container';
-import { ProductDetailsContainer } from '../../../screens/product-details/product-details.container';
+import { HomeContainer } from '../../../screens/home/home.container';
 
 export type StackRoute =
-  | '/overview'
-  | '/product-details';
+  | '/home';
 
 export const StackScreens: Record<StackRoute, React.ComponentType<any>> = {
-  '/overview': OverviewContainer,
-  '/product-details': ProductDetailsContainer,
+  '/home': HomeContainer,
 };
 
 const Stack = createNativeStackNavigator();

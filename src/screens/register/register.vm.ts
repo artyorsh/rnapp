@@ -21,7 +21,7 @@ export class RegisterVM implements IRegisterVM {
   
   public submit = (values: IRegisterFormValues): void => {
     this.session.register(values.email, values.password).then(() => {
-      this.navigation.replace('/overview');
+      this.navigation.replace('/home');
     });
   }
 

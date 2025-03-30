@@ -26,7 +26,7 @@ export class LoginVM implements ILoginVM {
   
   public submit = (values: ILoginFormValues): void => {
     this.session.login(values.email, values.password).then(() => {
-      this.navigation.replace('/overview');
+      this.navigation.replace('/home');
     });
   }
 

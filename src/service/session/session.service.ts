@@ -21,6 +21,7 @@ export type AnyAuthenticationProvider = IAuthenticationProvider<AnyAuthenticatio
 export interface IAuthenticationStorage<Token extends AnyAuthenticationToken> {
   getToken(): Promise<Token | null>;
   setToken(token: Token): Promise<void>;
+  clear(): Promise<void>;
 }
 
 export type AnyAuthenticationStorage = IAuthenticationStorage<AnyAuthenticationToken>;
@@ -89,6 +90,12 @@ export class SessionService implements ISessionService {
       }
 
       this.options.logger?.info('SessionService', `restore for user ${token.userId}, expires in ${expiresInMinutes} minutes`);
+    });
+  }
+
+  public logout = (): Promise<void> => {
+    return this.options.authenticationStorage.clear().then(() => {
+      this.options.logger?.info('SessionService', `logout`);
     });
   }
 

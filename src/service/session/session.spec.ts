@@ -29,6 +29,7 @@ describe('SessionService', () => {
     authenticationStorage = {
       getToken: jest.fn(() => Promise.resolve(null)),
       setToken: jest.fn(() => Promise.resolve()),
+      clear: jest.fn(() => Promise.resolve()),
     };
 
     sessionService = new SessionService({
@@ -112,6 +113,15 @@ describe('SessionService', () => {
     await expect(sessionService.restore())
       .rejects
       .toThrow();
+  });
+
+  it('should clear storage on logout', async () => {
+    await expect(sessionService.logout())
+      .resolves
+      .toBeUndefined();
+
+    expect(authenticationStorage.clear)
+      .toHaveBeenCalled();
   });
 });
 

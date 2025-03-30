@@ -36,5 +36,10 @@ export class MMKVAuthenticationStorage implements IAuthenticationStorage<AnyAuth
     this.mmkv.set(MMKVAuthenticationStorage.KEY_TOKEN, JSON.stringify(token));
     return Promise.resolve();
   }
+
+  public clear(): Promise<void> {
+    this.mmkv.delete(MMKVAuthenticationStorage.KEY_TOKEN);
+    return Promise.resolve();
+  }
 }
 

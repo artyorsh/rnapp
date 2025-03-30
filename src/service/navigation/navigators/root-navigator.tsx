@@ -7,11 +7,11 @@ import { AuthNavigator } from './auth-navigator';
 
 export type RootRoute =
   | '/auth'
-  | '/home';
+  | '/main';
 
 export const RootScreens: Record<RootRoute, React.ComponentType<any>> = {
   '/auth': AuthNavigator,
-  '/home': StackNavigator,
+  '/main': StackNavigator,
 };
 
 const Stack = createNativeStackNavigator();

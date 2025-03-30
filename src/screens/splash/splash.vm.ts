@@ -17,7 +17,7 @@ export class SplashVM implements ISplashVM, INavigationScreenLifecycleListener {
 
   public onMount = (): void => {
     this.session.restore().then(() => {
-      this.navigation.replace('/overview');
+      this.navigation.replace('/home');
     }).catch(() => {
       this.navigation.replace('/welcome');
     });

@@ -7,7 +7,7 @@ import { ILogService } from '../log/model';
 
 const NAVIGATION_MAP: Record<string, () => Record<IRoute, any>> = {
   '/auth': () => require('./navigators/auth-navigator').AuthScreens,
-  '/home': () => require('./navigators/stack-navigator').StackScreens,
+  '/main': () => require('./navigators/stack-navigator').StackScreens,
 };
 
 export class NavigationService implements INavigationService {
