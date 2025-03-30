@@ -1,6 +1,7 @@
-import { fireEvent, render } from "@testing-library/react-native";
+import { fireEvent, render, waitFor } from "@testing-library/react-native";
 import { IRegisterVM, Register } from "./register.component";
-import { Login } from "../login/login.component";
+import { IRegisterOptions, RegisterVM } from "./register.vm";
+import { INavigationScreenLifecycle } from "../../service/navigation/components/navigation-screen.container";
 
 describe('Register Component', () => {
 
@@ -38,5 +39,45 @@ describe('Register Component', () => {
     fireEvent.press(api.getByTestId('submit-button'));
 
     expect(vm.submit).toHaveBeenCalledWith({ email: 'test2@test.com', password: 'password2' });
+  });
+});
+
+describe('Register VM', () => {
+  let vm: IRegisterVM;
+
+  const lifecycle: INavigationScreenLifecycle = {
+    subscribe: jest.fn(listener => listener.onMount?.()),
+  };
+
+  const deps: IRegisterOptions = {
+    session: jest.requireMock('../../service/session/session.service').SessionService(),
+    navigation: jest.requireMock('../../service/navigation/navigation.service').NavigationService(),
+  };
+
+  beforeEach(() => {
+    vm = new RegisterVM(lifecycle, deps);
+  });
+
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
+  it('should navigate to home screen if registration is successful', async () => {
+    vm.submit({ email: 'test@test.com', password: 'password' });
+
+    await waitFor(() => {
+      expect(deps.navigation.replace).toHaveBeenCalledWith('/home');
+    });
+  });
+
+  it('should not navigate if registration is unsuccessful', async () => {
+    deps.session.register = jest.fn(() => Promise.reject());
+    vm = new RegisterVM(lifecycle, deps);
+
+    vm.submit({ email: 'test@test.com', password: 'password' });
+
+    await waitFor(() => {
+      expect(deps.navigation.replace).not.toHaveBeenCalled();
+    });
   });
 });

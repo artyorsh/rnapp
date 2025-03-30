@@ -1,27 +1,32 @@
-
-import { AppModule, lazyInject } from '../../di/container';
 import { INavigationService } from '../../service/navigation/model';
 import { IRegisterVM } from './register.component';
-import { ILogService } from '../../service/log/model';
 import { INavigationScreenLifecycle } from '../../service/navigation/components/navigation-screen.container';
 import { IRegisterFormValues } from './components/register-form.component';
 import { ISessionService } from '../../service/session/model';
 
+export interface IRegisterOptions {
+  session: ISessionService;
+  navigation: INavigationService;
+}
+
 export class RegisterVM implements IRegisterVM {
 
-  @lazyInject(AppModule.NAVIGATION) private navigation!: INavigationService;
-  @lazyInject(AppModule.LOG) private log!: ILogService;
-  @lazyInject(AppModule.SESSION) private session!: ISessionService;
+  private session: ISessionService;
+  private navigation: INavigationService;
+
   public readonly title = 'Register';
 
-  constructor(_lifecycle: INavigationScreenLifecycle) {
-
+  constructor(_lifecycle: INavigationScreenLifecycle, options: IRegisterOptions) {
+    this.session = options.session;
+    this.navigation = options.navigation;
   }
 
   
   public submit = (values: IRegisterFormValues): void => {
     this.session.register(values.email, values.password).then(() => {
       this.navigation.replace('/home');
+    }).catch(() => {
+      /* no-op */
     });
   }
 

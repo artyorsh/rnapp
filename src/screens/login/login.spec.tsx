@@ -1,5 +1,7 @@
-import { fireEvent, render } from "@testing-library/react-native";
+import { fireEvent, render, waitFor } from "@testing-library/react-native";
 import { ILoginVM, Login } from "./login.component";
+import { ILoginOptions, LoginVM } from "./login.vm";
+import { INavigationScreenLifecycle } from "../../service/navigation/components/navigation-screen.container";
 
 describe('Login Component', () => {
 
@@ -60,4 +62,45 @@ describe('Login Component', () => {
 
     expect(vm.submit).toHaveBeenCalledWith({ email: 'test2@test.com', password: 'password2' });
   });
+});
+
+describe('Login VM', () => {
+  const lifecycle: INavigationScreenLifecycle = {
+    subscribe: jest.fn(listener => listener.onMount?.()),
+  };
+
+  let vm: ILoginVM;
+
+  const deps: ILoginOptions = {
+    session: jest.requireMock('../../service/session/session.service').SessionService(),
+    navigation: jest.requireMock('../../service/navigation/navigation.service').NavigationService(),
+  };
+
+  beforeEach(() => {
+    vm = new LoginVM(lifecycle, deps);
+  });
+
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
+  it('should navigate to home screen if login is successful', async () => {
+    vm.submit({ email: 'test@test.com', password: 'password' });
+
+    await waitFor(() => {
+      expect(deps.navigation.replace).toHaveBeenCalledWith('/home');
+    });
+  });
+
+  it('should not navigate if login is unsuccessful', async () => {
+    deps.session.login = jest.fn(() => Promise.reject());
+    vm = new LoginVM(lifecycle, deps);
+
+    vm.submit({ email: 'test@test.com', password: 'password' });
+
+    await waitFor(() => {
+      expect(deps.navigation.replace).not.toHaveBeenCalled();
+    });
+  });
+
 });
