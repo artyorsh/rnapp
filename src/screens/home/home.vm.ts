@@ -5,7 +5,7 @@ import { INavigationScreenLifecycle } from '../../service/navigation/components/
 import { ISessionService } from '../../service/session/model';
 import { INavigationService } from '../../service/navigation/model';
 
-interface IHomeOptions {
+export interface IHomeOptions {
   session: ISessionService;
   navigation: INavigationService;
 }
@@ -27,6 +27,8 @@ export class HomeVM implements IHomeVM {
   public logout = (): void => {
     this.sessionService.logout().then(() => {
       this.navigationService.replace('/welcome');
+    }).catch(() => {
+      /* no-op */
     });
   }
 }
