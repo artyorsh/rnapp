@@ -2,6 +2,8 @@ import { LogService } from './log.service';
 import { ILogService, ILogTransporter } from './model';
 import { ConsoleLogTransporter } from './transporters/console-log-transporter';
 
+jest.unmock('./log.service');
+
 describe('Log Service', () => {
 
   let logService: ILogService;
@@ -10,7 +12,6 @@ describe('Log Service', () => {
 
   const transporter2: ILogTransporter = {
     id: '@log/fs',
-    destination: '',
     transport: jest.fn(),
     flush: jest.fn(),
   };

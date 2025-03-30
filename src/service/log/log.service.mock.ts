@@ -1,0 +1,17 @@
+import { ILogService } from "./model";
+
+jest.mock('./log.service', () => {
+  const logService: ILogService = {
+    log: jest.fn(),
+    debug: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    flush: jest.fn(),
+  };
+
+  return {
+    LogService: jest.fn().mockImplementation(() => logService),
+  };
+});
+

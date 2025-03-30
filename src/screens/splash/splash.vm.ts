@@ -1,10 +1,9 @@
-import { AppModule, lazyInject } from '../../di/container';
 import { INavigationService } from '../../service/navigation/model';
 import { INavigationScreenLifecycle, INavigationScreenLifecycleListener } from '../../service/navigation/components/navigation-screen.container';
 import { ISplashVM } from './splash.component';
 import { ISessionService } from '../../service/session/model';
 
-interface ISplashOptions {
+export interface ISplashOptions {
   navigation: INavigationService;
   session: ISessionService;
 }

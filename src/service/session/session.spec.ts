@@ -2,6 +2,8 @@ import { AnyAuthenticationProvider, AnyAuthenticationStorage, SessionService } f
 
 import { AnyAuthenticationToken } from "./session.service";
 
+jest.unmock('./session.service');
+
 describe('SessionService', () => {
 
   const TWO_MINUTES_MS: number = 2 * 60 * 1000;
