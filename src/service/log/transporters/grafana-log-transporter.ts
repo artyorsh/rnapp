@@ -2,7 +2,6 @@ import { ILogOptions, ILogTransporter } from '../model';
 
 interface IGrafanaLogTransporterOptions {
   hostUrl: string;
-  labels: Record<string, string>;
 }
 
 export class GrafanaLogTransporter implements ILogTransporter {
@@ -23,7 +22,7 @@ export class GrafanaLogTransporter implements ILogTransporter {
       body: JSON.stringify({
         streams: [
           {
-            stream: { ...this.options.labels, tag, level: options?.level || 'debug' },
+            stream: { tag, level: options?.level || 'debug' },
             values: [[timestampNs.toString(), `[${tag}] ${message}`]],
           },
         ],

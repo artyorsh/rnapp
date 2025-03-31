@@ -22,5 +22,7 @@ export interface ILogService {
   info(tag: string, message: string, payload?: ILogPayload): void;
   warn(tag: string, message: string, payload?: ILogPayload): void;
   error(tag: string, message: string, payload?: ILogPayload): void;
+  addLabel(key: string, value: string): void;
+  removeLabel(key: string): void;
   flush(): void;
 }

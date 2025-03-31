@@ -28,16 +28,16 @@ export const createModules = (): ContainerModule[] => {
     const appVersion: string = RNDeviceInfo.getVersion();
 
     const logService = new LogService({
+      defaultLabels: {
+        app: grafanaAppId,
+        version: appVersion,
+        runtime: `${deviceName}/${Platform.OS}/${systemVersion}/${deviceBrand}/${deviceModel}`,
+      },
       transporters: [
         new ConsoleLogTransporter(),
         new FileLogTransporter('app.log'),
         new GrafanaLogTransporter({
           hostUrl: Config.RNAPP_GRAFANA_HOST || '',
-          labels: {
-            app: grafanaAppId,
-            version: appVersion,
-            runtime: `${deviceName}/${Platform.OS}/${systemVersion}/${deviceBrand}/${deviceModel}`,
-          },
         }),
       ],
     });

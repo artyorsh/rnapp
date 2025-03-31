@@ -8,6 +8,8 @@ jest.mock('./log.service', () => {
     warn: jest.fn(),
     error: jest.fn(),
     flush: jest.fn(),
+    addLabel: jest.fn(),
+    removeLabel: jest.fn(),
   };
 
   return {

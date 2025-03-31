@@ -3,14 +3,20 @@ import { ILogLevel, ILogPayload, ILogService, ILogTransporter } from './model';
 export interface ILogServiceOptions {
   flushInterval?: number;
   transporters?: ILogTransporter[];
+  defaultLabels?: ILogPayload;
 }
 
 export class LogService implements ILogService {
 
   private transporters: ILogTransporter[] = [];
 
+  private defaultLabels: ILogPayload = {};
+  private customLabels: ILogPayload = {};
+
   constructor(options: ILogServiceOptions = {}) {
     this.transporters = options.transporters || [];
+    this.defaultLabels = options.defaultLabels || {};
+
     const flushInterval: number = options.flushInterval || 0;
 
     if (flushInterval > 0) {
@@ -19,7 +25,10 @@ export class LogService implements ILogService {
   }
 
   public log = (tag: string, message: string, level: ILogLevel, payload: ILogPayload = {}): void => {
-    this.transporters.forEach(t => t.transport(tag, message, { ...payload, level }));
+    this.transporters.forEach(t => {
+      const labels = { ...this.customLabels, ...payload, ...this.defaultLabels, level };
+      t.transport(tag, message, labels);
+    });
   };
 
   public debug = (tag: string, message: string, payload: ILogPayload = {}): void => {
@@ -38,6 +47,14 @@ export class LogService implements ILogService {
     this.log(tag, message, 'error', payload);
   };
 
+  public addLabel = (key: string, value: string): void => {
+    this.customLabels[key] = value;
+  };
+
+  public removeLabel = (key: string): void => {
+    delete this.customLabels[key];
+  };
+  
   public flush = (): void => {
     this.transporters.forEach(t => t.flush());
   };

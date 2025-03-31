@@ -97,6 +97,105 @@ describe('Log Service', () => {
     expect(logService.flush).toHaveBeenCalledTimes(0);
   });
 
+  it('should add default labels to all logs', () => {
+    logService = new LogService({ 
+      defaultLabels: { app: 'test', version: '1.0.0' },
+      transporters: [transporter2],
+    });
+
+    logService.debug('test', 'test');
+
+    expect(transporter2.transport).toHaveBeenCalledWith(
+      'test',
+      'test',
+      expect.objectContaining({ app: 'test', version: '1.0.0' }),
+    );
+  });
+  
+  it('should add custom labels', () => {
+    logService = new LogService({ 
+      defaultLabels: { app: 'test', version: '1.0.0' },
+      transporters: [transporter2],
+    });
+
+    logService.addLabel('user_id', '123');
+
+    logService.debug('test', 'test');
+
+    expect(transporter2.transport).toHaveBeenCalledWith(
+      'test',
+      'test',
+      expect.objectContaining({ user_id: '123' }),
+    );
+  });
+
+  it('should not override default labels with custom labels', () => {
+    logService = new LogService({ 
+      defaultLabels: { app: 'test' },
+      transporters: [transporter2],
+    });
+
+    logService.addLabel('app', 'test2');
+
+    logService.debug('test', 'test');
+
+    expect(transporter2.transport).toHaveBeenCalledWith(
+      'test',
+      'test',
+      expect.objectContaining({ app: 'test' }),
+    );
+  });
+
+  it('should not override default labels with payload labels', () => {
+    logService = new LogService({ 
+      defaultLabels: { app: 'test' },
+      transporters: [transporter2],
+    });
+
+    logService.debug('test', 'test', { app: 'test2', level: 'warn' });
+
+    expect(transporter2.transport).toHaveBeenCalledWith(
+      'test',
+      'test',
+      expect.objectContaining({ app: 'test', level: 'debug' }),
+    );
+  });
+
+  it('should not remove default labels', () => {
+    logService = new LogService({ 
+      defaultLabels: { app: 'test', version: '1.0.0' },
+      transporters: [transporter2],
+    });
+
+    logService.removeLabel('app');
+
+    logService.debug('test', 'test');
+
+    expect(transporter2.transport).toHaveBeenCalledWith(
+      'test',
+      'test',
+      expect.objectContaining({ app: 'test' }),
+    );
+  });
+
+  it('should remove custom labels', () => {
+    logService = new LogService({ 
+      defaultLabels: { app: 'test', version: '1.0.0' },
+      transporters: [transporter2],
+    });
+
+    logService.addLabel('user_id', '123');
+    logService.removeLabel('user_id');
+
+    logService.debug('test', 'test');
+
+    expect(transporter2.transport).toHaveBeenCalledWith(
+      'test',
+      'test',
+      expect.not.objectContaining({ user_id: '123' }),
+    );
+  });
+
   it('flushes all transporters', () => {
     transporter1.flush = jest.fn();
     logService.flush();
