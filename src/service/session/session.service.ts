@@ -1,8 +1,9 @@
 import { ILogService } from "../log/model";
-import { ISessionService } from "./model";
+import { ISession, ISessionModule, ISessionService } from "./model";
 
 export interface IAuthenticationToken<Payload> {
   provider: string;
+  secret: string;
   userId: string;
   expiresAt: number;
   payload: Payload;
@@ -35,26 +36,38 @@ export interface ISessionServiceOptions<Provider extends AnyAuthenticationProvid
 
 export class SessionService implements ISessionService {
 
+  private modules: ISessionModule[] = [];
+
   constructor(private options: ISessionServiceOptions<AnyAuthenticationProvider, AnyAuthenticationStorage>) {
   }
 
-  public login = (email: string, password: string): Promise<void> => {
+  public login = (email: string, password: string): Promise<ISession> => {
     return this.options.authenticationProvider.login(email, password).then(token => {
       return this.options.authenticationStorage.setToken(token).then(() => {
-        this.options.logger?.info('SessionService', `login user ${token.userId}`);
+        const session: ISession = this.createSession(token);
+
+        this.options.logger?.info('SessionService', `login user ${session.userId}`);
+
+        return this.initializeModules(session)
+          .then(() => session);
       });
     });
   }
 
-  public register = (email: string, password: string): Promise<void> => {
+  public register = (email: string, password: string): Promise<ISession> => {
     return this.options.authenticationProvider.register(email, password).then(token => {
       return this.options.authenticationStorage.setToken(token).then(() => {
-        this.options.logger?.info('SessionService', `register user ${token.userId}`);
+        const session: ISession = this.createSession(token);
+
+        this.options.logger?.info('SessionService', `register user ${session.userId}`);
+
+        return this.initializeModules(session)
+          .then(() => session);
       });
     });
   }
 
-  public refresh = (): Promise<void> => {
+  public refresh = (): Promise<ISession> => {
     return this.options.authenticationStorage.getToken().then(token => {
       if(!token) {
         const error: string = 'Unable to refresh: no token found';
@@ -65,14 +78,19 @@ export class SessionService implements ISessionService {
 
       return this.options.authenticationProvider.refresh(token).then(token => {
         return this.options.authenticationStorage.setToken(token).then(() => {
+          const session: ISession = this.createSession(token);
+
           const expiresInMinutes: number = this.getExpiresInMinutes(token);
-          this.options.logger?.info('SessionService', `refresh for user ${token.userId}, expires in ${expiresInMinutes} minutes`);
+          this.options.logger?.info('SessionService', `refresh for user ${session.userId}, expires in ${expiresInMinutes} minutes`);
+
+          return this.initializeModules(session)
+            .then(() => session);
         });
       });
     });
   }
 
-  public restore = (): Promise<void> => {
+  public restore = (): Promise<ISession> => {
     return this.options.authenticationStorage.getToken().then(token => {
       if(!token) {
         const error: string = 'Unable to restore: no token found';
@@ -89,14 +107,51 @@ export class SessionService implements ISessionService {
         return this.refresh();
       }
 
-      this.options.logger?.info('SessionService', `restore for user ${token.userId}, expires in ${expiresInMinutes} minutes`);
+      const session: ISession = this.createSession(token);
+
+      this.options.logger?.info('SessionService', `restore for user ${session.userId}, expires in ${expiresInMinutes} minutes`);
+
+      return this.initializeModules(session)
+        .then(() => session);
     });
   }
 
   public logout = (): Promise<void> => {
     return this.options.authenticationStorage.clear().then(() => {
       this.options.logger?.info('SessionService', `logout`);
+
+      return this.destroyModules();
     });
+  }
+
+  public addModule = (module: ISessionModule): void => {
+    this.modules.push(module);
+  }
+
+  private createSession = (token: AnyAuthenticationToken): ISession => {
+    return { userId: token.userId, secret: token.secret };
+  }
+
+  private initializeModules = (session: ISession): Promise<void> => {
+    const moduleInitPromises = this.modules.map(module => module.initialize(session));
+
+    return Promise.all(moduleInitPromises)
+      .then(() => {/** no-op */})
+      .catch(error => {
+        this.options.logger?.error('SessionService', `Failed to initialize modules: ${error.message}`);
+        return Promise.reject(error);
+      });
+  }
+
+  private destroyModules = (): Promise<void> => {
+    const moduleDestroyPromises = this.modules.map(module => module.destroy());
+
+    return Promise.all(moduleDestroyPromises)
+      .then(() => {/** no-op */})
+      .catch(error => {
+        this.options.logger?.error('SessionService', `Failed to destroy modules: ${error.message}`);
+        return Promise.reject(error);
+      });
   }
 
   private getExpiresInMinutes = (token: AnyAuthenticationToken): number => {

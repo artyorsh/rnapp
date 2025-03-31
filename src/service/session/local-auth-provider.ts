@@ -27,6 +27,7 @@ export class LocalAuthenticationProvider implements IAuthenticationProvider<ILoc
 
     return {
       provider: 'auth-api',
+      secret: '123',
       expiresAt: Date.now() + fifteenMinutesInMs,
       userId: '1',
       payload: {

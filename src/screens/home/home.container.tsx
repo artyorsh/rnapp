@@ -13,6 +13,7 @@ export class HomeContainer extends NavigationScreenContainer {
     this.vm = new HomeVM(this.lifecycle, {
       session: container.get(AppModule.SESSION),
       navigation: container.get(AppModule.NAVIGATION),
+      user: container.get(AppModule.USER),
     });
   }
 

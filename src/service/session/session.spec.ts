@@ -1,3 +1,4 @@
+import { ISessionModule } from "./model";
 import { AnyAuthenticationProvider, AnyAuthenticationStorage, SessionService } from "./session.service";
 
 import { AnyAuthenticationToken } from "./session.service";
@@ -10,6 +11,7 @@ describe('SessionService', () => {
 
   const createToken = (validMs: number): AnyAuthenticationToken => ({
     provider: 'local',
+    secret: '123',
     userId: '1',
     expiresAt: Date.now() + validMs,
     payload: {},
@@ -44,13 +46,13 @@ describe('SessionService', () => {
   it('should login', async () => {
     await expect(sessionService.login('test@test.com', 'password'))
       .resolves
-      .toBeUndefined()
+      .toEqual({ userId: '1', secret: '123' });
   });
 
   it('should register', async () => {
     await expect(sessionService.register('test@test.com', 'password'))
       .resolves
-      .toBeUndefined()
+      .toEqual({ userId: '1', secret: '123' });
   });
 
   it('should refresh with stored token', async () => {
@@ -65,7 +67,7 @@ describe('SessionService', () => {
 
     await expect(sessionService.refresh())
       .resolves
-      .toBeUndefined()
+      .toEqual({ userId: '1', secret: '123' });
   });
 
   it('should not refresh without stored token', async () => {
@@ -86,7 +88,7 @@ describe('SessionService', () => {
 
     await expect(sessionService.restore())
       .resolves
-      .toBeUndefined();
+      .toEqual({ userId: '1', secret: '123' });
 
     expect(authenticationProvider.refresh)
       .toHaveBeenCalled();
@@ -104,7 +106,7 @@ describe('SessionService', () => {
 
     await expect(sessionService.restore())
       .resolves
-      .toBeUndefined();
+      .toEqual({ userId: '1', secret: '123' });
 
     expect(authenticationProvider.refresh)
       .not
@@ -125,5 +127,118 @@ describe('SessionService', () => {
     expect(authenticationStorage.clear)
       .toHaveBeenCalled();
   });
-});
 
+  it('should initialize modules on login', async () => {
+    const module: ISessionModule = {
+      initialize: jest.fn(() => Promise.resolve()),
+      destroy: jest.fn(() => Promise.resolve()),
+    };
+
+    sessionService.addModule(module);
+
+    await sessionService.login('test@test.com', 'password');
+
+    expect(module.initialize)
+      .toHaveBeenCalledWith({ userId: '1', secret: '123' });
+  });
+
+  it('should initialize modules on register', async () => {
+    const module: ISessionModule = {
+      initialize: jest.fn(() => Promise.resolve()),
+      destroy: jest.fn(() => Promise.resolve()),
+    };
+
+    sessionService.addModule(module);
+
+    await sessionService.register('test@test.com', 'password');
+
+    expect(module.initialize)
+      .toHaveBeenCalledWith({ userId: '1', secret: '123' });
+  });
+
+  it('should initialize modules on refresh', async () => {
+    sessionService = new SessionService({
+      authenticationProvider,
+      authenticationStorage: {
+        ...authenticationStorage,
+        getToken: () => Promise.resolve(createToken(TWO_MINUTES_MS)),
+      },
+      tokenRefreshThresholdMinutes: 1,
+    });
+
+    const module: ISessionModule = {
+      initialize: jest.fn(() => Promise.resolve()),
+      destroy: jest.fn(() => Promise.resolve()),
+    };
+
+    sessionService.addModule(module);
+
+    await sessionService.refresh();
+
+    expect(module.initialize)
+      .toHaveBeenCalledWith({ userId: '1', secret: '123' });
+  });
+
+  it('should initialize modules on restore', async () => {
+    sessionService = new SessionService({
+      authenticationProvider,
+      authenticationStorage: {
+        ...authenticationStorage,
+        getToken: () => Promise.resolve(createToken(TWO_MINUTES_MS)),
+      },
+      tokenRefreshThresholdMinutes: 1,
+    });
+
+    const module: ISessionModule = {
+      initialize: jest.fn(() => Promise.resolve()),
+      destroy: jest.fn(() => Promise.resolve()),
+    };
+
+    sessionService.addModule(module);
+
+    await sessionService.restore();
+
+    expect(module.initialize)
+      .toHaveBeenCalledWith({ userId: '1', secret: '123' });
+  });
+
+  it('should reject if modules fail to initialize', async () => {
+    const module: ISessionModule = {
+      initialize: jest.fn(() => Promise.reject(new Error('Test error'))),
+      destroy: jest.fn(() => Promise.resolve()),
+    };
+
+    sessionService.addModule(module);
+
+    await expect(sessionService.login('test@test.com', 'password'))
+      .rejects
+      .toThrow('Test error');
+  });
+
+  it('should destroy modules on logout', async () => {
+    const module: ISessionModule = {
+      initialize: jest.fn(() => Promise.resolve()),
+      destroy: jest.fn(() => Promise.resolve()),
+    };
+
+    sessionService.addModule(module);
+
+    await sessionService.logout();
+
+    expect(module.destroy)
+      .toHaveBeenCalled();
+  });
+
+  it('should reject if modules fail to destroy', async () => {
+    const module: ISessionModule = {
+      initialize: jest.fn(() => Promise.resolve()),
+      destroy: jest.fn(() => Promise.reject(new Error('Test error'))),
+    };
+
+    sessionService.addModule(module);
+
+    await expect(sessionService.logout())
+      .rejects
+      .toThrow('Test error');
+  });
+});

@@ -15,6 +15,9 @@ import { ISessionService } from '../service/session/model';
 import { SessionService } from '../service/session/session.service';
 import { LocalAuthenticationProvider } from '../service/session/local-auth-provider';
 import { MMKVAuthenticationStorage } from '../service/session/mmkv-auth-storage';
+import { UserApi } from '../service/user/user-api';
+import { IUserService } from '../service/user/model';
+import { UserService } from '../service/user/user.service';
 
 export const createModules = (): ContainerModule[] => {
 
@@ -46,12 +49,20 @@ export const createModules = (): ContainerModule[] => {
 
     bind<ILogService>(AppModule.LOG).toConstantValue(logService);
 
-    bind<ISessionService>(AppModule.SESSION).toConstantValue(new SessionService({
+    const sessionService: ISessionService = new SessionService({
       tokenRefreshThresholdMinutes: Number(Config.RNAPP_AUTH_TOKEN_REFRESH_THRESHOLD_MINUTES) || 0,
       authenticationProvider: new LocalAuthenticationProvider(),
       authenticationStorage: new MMKVAuthenticationStorage({
         encryptionKey: Config.RNAPP_STORAGE_ENCRYPTION_KEY || '',
       }),
+      logger: logService,
+    });
+
+    bind<ISessionService>(AppModule.SESSION).toConstantValue(sessionService);
+
+    bind<IUserService>(AppModule.USER).toConstantValue(new UserService({
+      sessionService,
+      userRepository: new UserApi(),
       logger: logService,
     }));
   });

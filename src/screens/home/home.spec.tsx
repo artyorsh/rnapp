@@ -37,6 +37,7 @@ describe('Home VM', () => {
   const deps: IHomeOptions = {
     session: jest.requireMock('../../service/session/session.service').SessionService(),
     navigation: jest.requireMock('../../service/navigation/navigation.service').NavigationService(),
+    user: jest.requireMock('../../service/user/user.service').UserService(),
   };
 
   beforeEach(() => {
