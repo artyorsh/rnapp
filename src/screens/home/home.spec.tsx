@@ -1,55 +1,41 @@
-import { render, waitFor } from "@testing-library/react-native";
+import { fireEvent, render, waitFor } from "@testing-library/react-native";
 import { Home, IHomeVM } from "./home.component";
 import { IHomeOptions } from "./home.vm";
 import { HomeVM } from "./home.vm";
 import { INavigationScreenLifecycle } from "../../service/navigation/components/navigation-screen.container";
 
-describe('Home Component', () => {
+describe('Home', () => {
 
   let vm: IHomeVM;
-
-  beforeEach(() => {
-    vm = {
-      title: 'Home',
-      logout: jest.fn(),
-    };
-  });
-
-  it('should render with given title', () => {
-    const api = render(<Home vm={vm} />);
-    expect(api.getByText('Home')).toBeTruthy();
-  });
-
-  it('should call logout', () => {
-    vm.logout();
-    expect(vm.logout).toHaveBeenCalled();
-  });
-
-});
-
-describe('Home VM', () => {
-  let vm: IHomeVM;
+  let deps: IHomeOptions;
 
   const lifecycle: INavigationScreenLifecycle = {
     subscribe: jest.fn(listener => listener.onMount?.()),
   };
 
-  const deps: IHomeOptions = {
-    session: jest.requireMock('../../service/session/session.service').SessionService(),
-    navigation: jest.requireMock('../../service/navigation/navigation.service').NavigationService(),
-    user: jest.requireMock('../../service/user/user.service').UserService(),
-  };
-
   beforeEach(() => {
+    deps = {
+      session: jest.requireMock('../../service/session/session.service').SessionService(),
+      navigation: jest.requireMock('../../service/navigation/navigation.service').NavigationService(),
+      user: jest.requireMock('../../service/user/user.service').UserService(),
+    };
     vm = new HomeVM(lifecycle, deps);
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
+    jest.clearAllMocks();
   });
 
-  it('should navigate to welcome screen if logout is successful', async () => {
-    vm.logout();
+  it('should render with user name in title', () => {
+    deps.user.getUser = jest.fn(() => ({ id: '1', name: 'Test User' }));
+
+    const api = render(<Home vm={vm} />);
+    expect(api.findByText(/Test User/)).toBeTruthy();
+  });
+
+  it('should replace with welcome screen when logged out', async () => {
+    const api = render(<Home vm={vm} />);
+    fireEvent.press(api.getByTestId('logout-button'));
 
     await waitFor(() => {
       expect(deps.navigation.replace).toHaveBeenCalledWith('/welcome');
@@ -58,9 +44,9 @@ describe('Home VM', () => {
 
   it('should not navigate if logout is unsuccessful', async () => {
     deps.session.logout = jest.fn(() => Promise.reject());
-    vm = new HomeVM(lifecycle, deps);
 
-    vm.logout();
+    const api = render(<Home vm={vm} />);
+    fireEvent.press(api.getByTestId('logout-button'));
 
     await waitFor(() => {
       expect(deps.navigation.replace).not.toHaveBeenCalled();

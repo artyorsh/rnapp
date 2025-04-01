@@ -21,6 +21,7 @@ export const Home: React.FC<{ vm: IHomeVM }> = observer(({ vm }) => {
           {vm.title}
         </Text>
         <Button
+          testID='logout-button'
           title='Logout'
           onPress={vm.logout}
         />
