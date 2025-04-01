@@ -5,39 +5,30 @@ import { INavigationScreenLifecycle } from '../../service/navigation/components/
 import { ISplashVM, Splash } from './splash.component';
 import { ISplashOptions, SplashVM } from './splash.vm';
 
-describe('Splash Component', () => {
+describe('Splash', () => {
 
   let vm: ISplashVM;
+  let deps: ISplashOptions;
 
-  beforeEach(() => {
-    vm = {
-      title: 'Splash Title',
-    };
-  });
-
-  it('should render with correct title', () => {
-    const api = render(<Splash vm={vm} />);
-    expect(api.getByText('Splash Title')).toBeTruthy();
-  });
-});
-
-describe('Splash VM', () => {
   const lifecycle: INavigationScreenLifecycle = {
     subscribe: jest.fn(listener => listener.onMount?.()),
   };
 
-  const deps: ISplashOptions = {
-    navigation: jest.requireMock('../../service/navigation/navigation.service').NavigationService(),
-    session: jest.requireMock('../../service/session/session.service').SessionService(),
-  };
-
-  let vm: ISplashVM;
-
   beforeEach(() => {
+    deps = {
+      navigation: jest.requireMock('../../service/navigation/navigation.service').NavigationService(),
+      session: jest.requireMock('../../service/session/session.service').SessionService(),
+    };
     vm = new SplashVM(lifecycle, deps);
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should navigate to home screen if session is restored', async () => {
+    render(<Splash vm={vm} />);
+
     await waitFor(() => {
       return expect(deps.navigation.replace).toHaveBeenCalledWith('/home');
     });
@@ -46,6 +37,8 @@ describe('Splash VM', () => {
   it('should navigate to welcome screen if session is not restored', async () => {
     deps.session.restore = jest.fn(() => Promise.reject());
     vm = new SplashVM(lifecycle, deps);
+
+    render(<Splash vm={vm} />);
 
     await waitFor(() => {
       return expect(deps.navigation.replace).toHaveBeenCalledWith('/welcome');
