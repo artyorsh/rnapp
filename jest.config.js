@@ -11,6 +11,7 @@ module.exports = {
     '<rootDir>/src/service/log/log.service.mock.ts',
     '<rootDir>/src/service/navigation/navigation.service.mock.ts',
     '<rootDir>/src/service/session/session.service.mock.ts',
+    '<rootDir>/src/service/user/user.service.mock.ts',
   ],
   transformIgnorePatterns: [`node_modules/(?!${esModules.join('|')})`],
   testMatch: [

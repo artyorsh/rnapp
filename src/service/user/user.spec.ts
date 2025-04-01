@@ -3,6 +3,8 @@ import { ISessionService } from "../session/model";
 import { IUserService } from "./model";
 import { UserService } from "./user.service";
 
+jest.unmock('./user.service');
+
 describe('UserService', () => {
 
   let userService: IUserService;
