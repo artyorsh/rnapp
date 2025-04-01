@@ -1,5 +1,7 @@
-import { fireEvent, render } from "@testing-library/react-native";
-import { IWelcomeVM, Welcome } from "./welcome.component";
+import React from 'react';
+import { fireEvent, render } from '@testing-library/react-native';
+
+import { IWelcomeVM, Welcome } from './welcome.component';
 
 describe('Welcome Component', () => {
 
@@ -27,5 +29,5 @@ describe('Welcome Component', () => {
     fireEvent.press(api.getByTestId('register-button'));
     expect(vm.register).toHaveBeenCalled();
   });
-  
+
 });

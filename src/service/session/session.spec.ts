@@ -1,7 +1,6 @@
-import { ISessionModule } from "./model";
-import { AnyAuthenticationProvider, AnyAuthenticationStorage, SessionService } from "./session.service";
-
-import { AnyAuthenticationToken } from "./session.service";
+import { ISessionModule } from './model';
+import { AnyAuthenticationProvider, AnyAuthenticationStorage, SessionService } from './session.service';
+import { AnyAuthenticationToken } from './session.service';
 
 jest.unmock('./session.service');
 

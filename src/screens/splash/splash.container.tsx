@@ -1,9 +1,9 @@
 import React from 'react';
 
+import { AppModule, container } from '../../di/container';
+import { NavigationScreenContainer, NavigationScreenProps } from '../../service/navigation/components/navigation-screen.container';
 import { ISplashVM, Splash } from './splash.component';
 import { SplashVM } from './splash.vm';
-import { NavigationScreenContainer, NavigationScreenProps } from '../../service/navigation/components/navigation-screen.container';
-import { AppModule, container } from '../../di/container';
 
 interface RouteParams {
 }

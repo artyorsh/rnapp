@@ -1,7 +1,9 @@
-import { fireEvent, render, waitFor } from "@testing-library/react-native";
-import { IRegisterVM, Register } from "./register.component";
-import { IRegisterOptions, RegisterVM } from "./register.vm";
-import { INavigationScreenLifecycle } from "../../service/navigation/components/navigation-screen.container";
+import React from 'react';
+import { fireEvent, render, waitFor } from '@testing-library/react-native';
+
+import { INavigationScreenLifecycle } from '../../service/navigation/components/navigation-screen.container';
+import { IRegisterVM, Register } from './register.component';
+import { IRegisterOptions, RegisterVM } from './register.vm';
 
 describe('Register Component', () => {
 

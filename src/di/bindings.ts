@@ -1,23 +1,23 @@
-import Config from 'react-native-config';
 import { Platform } from 'react-native';
+import Config from 'react-native-config';
 import RNDeviceInfo from 'react-native-device-info';
 import { ContainerModule } from 'inversify';
 
-import { INavigationService } from '../service/navigation/model';
-import { NavigationService } from '../service/navigation/navigation.service';
-import { AppModule } from './container';
 import { LogService } from '../service/log/log.service';
+import { ILogService } from '../service/log/model';
 import { ConsoleLogTransporter } from '../service/log/transporters/console-log-transporter';
 import { FileLogTransporter } from '../service/log/transporters/file-log-transporter';
 import { GrafanaLogTransporter } from '../service/log/transporters/grafana-log-transporter';
-import { ILogService } from '../service/log/model';
-import { ISessionService } from '../service/session/model';
-import { SessionService } from '../service/session/session.service';
+import { INavigationService } from '../service/navigation/model';
+import { NavigationService } from '../service/navigation/navigation.service';
 import { LocalAuthenticationProvider } from '../service/session/local-auth-provider';
 import { MMKVAuthenticationStorage } from '../service/session/mmkv-auth-storage';
-import { UserApi } from '../service/user/user-api';
+import { ISessionService } from '../service/session/model';
+import { SessionService } from '../service/session/session.service';
 import { IUserService } from '../service/user/model';
 import { UserService } from '../service/user/user.service';
+import { UserApi } from '../service/user/user-api';
+import { AppModule } from './container';
 
 export const createModules = (): ContainerModule[] => {
 

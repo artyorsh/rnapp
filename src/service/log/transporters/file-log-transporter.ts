@@ -17,10 +17,10 @@ export class FileLogTransporter implements ILogTransporter {
   private writeStream: ReactNativeBlobUtilWriteStream | null = null;
 
   private logQueue: ILogMessage[] = [];
-  
+
   constructor(filename: string) {
     this.destination = `${RNFetchBlob.fs.dirs.DocumentDir}/${filename}`;
-    
+
     this.createWriteStream().then(stream => {
       this.writeStream = stream;
     });
@@ -59,7 +59,7 @@ export class FileLogTransporter implements ILogTransporter {
 
     return this.writeStream?.write(`${jsonStringMessage}\n`);
   };
-  
+
   private createWriteStream = (): Promise<ReactNativeBlobUtilWriteStream> => {
     if (!RNFetchBlob.fs.exists(this.destination)) {
       return RNFetchBlob.fs.writeFile(this.destination, '', 'utf8')

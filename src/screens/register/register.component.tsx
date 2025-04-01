@@ -2,9 +2,9 @@ import React from 'react';
 import { StyleSheet, ViewProps } from 'react-native';
 import { observer } from 'mobx-react';
 
-import { SafeArea } from '../../components/safe-area.component';
-import { NavigationBar } from '../../components/navigation-bar/navigation-bar.component';
 import { NavigationBarBackAccessory } from '../../components/navigation-bar/navigation-accessory.component';
+import { NavigationBar } from '../../components/navigation-bar/navigation-bar.component';
+import { SafeArea } from '../../components/safe-area.component';
 import { Text } from '../../components/text.component';
 import { IRegisterFormValues, RegisterForm } from './components/register-form.component';
 
@@ -31,10 +31,10 @@ export const Register: React.FC<{ vm: IRegisterVM }> = observer(({ vm }) => {
         category='heading'>
         {vm.title}
       </Text>
-      <RegisterForm 
+      <RegisterForm
         style={styles.registerForm}
         onSubmit={vm.submit}
-      /> 
+      />
     </SafeArea>
   );
 });

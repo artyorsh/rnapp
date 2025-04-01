@@ -1,4 +1,4 @@
-import { IAuthenticationProvider, IAuthenticationToken } from "./session.service";
+import { IAuthenticationProvider, IAuthenticationToken } from './session.service';
 
 type ILocalAuthenticationToken = IAuthenticationToken<{
   token: string;

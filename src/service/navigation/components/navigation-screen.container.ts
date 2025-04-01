@@ -6,10 +6,10 @@ export interface INavigationScreenLifecycle {
 }
 
 export interface INavigationScreenLifecycleListener {
-  onMount?: () => void;
-  onFocus?: () => void;
-  onBlur?: () => void;
-  onUnmount?: () => void;
+  onMount?(): void;
+  onFocus?(): void;
+  onBlur?(): void;
+  onUnmount?(): void;
 }
 
 export type NavigationScreenProps<Params extends object> = NativeStackScreenProps<{ Self: Params }, 'Self'>;
@@ -30,7 +30,7 @@ export abstract class NavigationScreenContainer<RouteParams extends object = {}>
         this.lifecycleListener = listener;
         this.removeFocusSubscription = props.navigation.addListener('focus', () => this.lifecycleListener?.onFocus?.());
         this.removeBlurSubscription = props.navigation.addListener('blur', () => this.lifecycleListener?.onBlur?.());
-      }
+      },
     };
   }
 

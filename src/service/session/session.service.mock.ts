@@ -1,4 +1,4 @@
-import { ISessionService } from "./model";
+import { ISessionService } from './model';
 
 jest.mock('./session.service', () => {
   const sessionService: ISessionService = {

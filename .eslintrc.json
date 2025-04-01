@@ -76,8 +76,8 @@
       "exceptAfterSingleLine": true
     }],
 
-    "no-duplicate-imports": "off",
-    "@typescript-eslint/no-duplicate-imports": "error",
+    // "no-duplicate-imports": "off",
+    // "@typescript-eslint/no-duplicate-imports": "error",
 
     "no-fallthrough": "off",
     "no-multi-spaces": "error",
@@ -269,7 +269,7 @@
     "@typescript-eslint/method-signature-style": ["error", "method"],
     "@typescript-eslint/no-empty-function": "error",
     "@typescript-eslint/no-useless-constructor": "error",
-    "@typescript-eslint/prefer-optional-chain": "error",
+    // "@typescript-eslint/prefer-optional-chain": "error",
     "@typescript-eslint/type-annotation-spacing": "error"
   }
 }

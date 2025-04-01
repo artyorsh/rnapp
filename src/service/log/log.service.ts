@@ -54,7 +54,7 @@ export class LogService implements ILogService {
   public removeLabel = (key: string): void => {
     delete this.customLabels[key];
   };
-  
+
   public flush = (): void => {
     this.transporters.forEach(t => t.flush());
   };

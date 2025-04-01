@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleSheet, View, ViewProps } from 'react-native';
-import { Input } from '../../../components/input.component';
+
 import { Button } from '../../../components/button.component';
+import { Input } from '../../../components/input.component';
 
 export interface ILoginFormValues {
   email: string;
@@ -10,8 +11,8 @@ export interface ILoginFormValues {
 
 interface Props extends ViewProps {
   initialValues: ILoginFormValues;
-  onSubmit: (values: ILoginFormValues) => void;
-} 
+  onSubmit(values: ILoginFormValues): void;
+}
 
 export const LoginForm: React.FC<Props> = ({ initialValues, onSubmit, ...props }) => {
 
@@ -20,7 +21,7 @@ export const LoginForm: React.FC<Props> = ({ initialValues, onSubmit, ...props }
 
   return (
     <View {...props}>
-      <Input 
+      <Input
         testID='email-input'
         style={styles.input}
         value={email}
@@ -36,7 +37,7 @@ export const LoginForm: React.FC<Props> = ({ initialValues, onSubmit, ...props }
         secureTextEntry={true}
         onChangeText={setPassword}
       />
-      <Button 
+      <Button
         testID='submit-button'
         style={styles.submitButton}
         title='Login'

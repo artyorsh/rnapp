@@ -1,4 +1,4 @@
-import { ILogService } from "./model";
+import { ILogService } from './model';
 
 jest.mock('./log.service', () => {
   const logService: ILogService = {

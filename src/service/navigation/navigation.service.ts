@@ -1,9 +1,9 @@
 import React from 'react';
 import { NavigationContainerRef, Route, StackActions } from '@react-navigation/native';
 
+import { ILogService } from '../log/model';
 import { INavigationService, IRoute, IRouteParams } from './model';
 import { RootNavigator, RootNavigatorProps } from './navigators/root-navigator';
-import { ILogService } from '../log/model';
 
 const NAVIGATION_MAP: Record<string, () => Record<IRoute, any>> = {
   '/auth': () => require('./navigators/auth-navigator').AuthScreens,

@@ -1,5 +1,5 @@
-import { ILogService } from "../log/model";
-import { ISession, ISessionModule, ISessionService } from "./model";
+import { ILogService } from '../log/model';
+import { ISession, ISessionModule, ISessionService } from './model';
 
 export interface IAuthenticationToken<Payload> {
   provider: string;
@@ -52,7 +52,7 @@ export class SessionService implements ISessionService {
           .then(() => session);
       });
     });
-  }
+  };
 
   public register = (email: string, password: string): Promise<ISession> => {
     return this.options.authenticationProvider.register(email, password).then(token => {
@@ -65,18 +65,18 @@ export class SessionService implements ISessionService {
           .then(() => session);
       });
     });
-  }
+  };
 
   public refresh = (): Promise<ISession> => {
-    return this.options.authenticationStorage.getToken().then(token => {
-      if(!token) {
+    return this.options.authenticationStorage.getToken().then(storedToken => {
+      if (!storedToken) {
         const error: string = 'Unable to refresh: no token found';
         this.options.logger?.error('SessionService', error);
 
         return Promise.reject(new Error(error));
       }
 
-      return this.options.authenticationProvider.refresh(token).then(token => {
+      return this.options.authenticationProvider.refresh(storedToken).then(token => {
         return this.options.authenticationStorage.setToken(token).then(() => {
           const session: ISession = this.createSession(token);
 
@@ -88,11 +88,11 @@ export class SessionService implements ISessionService {
         });
       });
     });
-  }
+  };
 
   public restore = (): Promise<ISession> => {
     return this.options.authenticationStorage.getToken().then(token => {
-      if(!token) {
+      if (!token) {
         const error: string = 'Unable to restore: no token found';
         this.options.logger?.error('SessionService', error);
 
@@ -102,8 +102,9 @@ export class SessionService implements ISessionService {
       const expiresInMinutes: number = this.getExpiresInMinutes(token);
       const isValidEnough: boolean = expiresInMinutes > this.options.tokenRefreshThresholdMinutes;
 
-      if(!isValidEnough) {
+      if (!isValidEnough) {
         this.options.logger?.warn('SessionService', `token expires in less than ${this.options.tokenRefreshThresholdMinutes} minutes, refreshing`);
+
         return this.refresh();
       }
 
@@ -114,23 +115,23 @@ export class SessionService implements ISessionService {
       return this.initializeModules(session)
         .then(() => session);
     });
-  }
+  };
 
   public logout = (): Promise<void> => {
     return this.options.authenticationStorage.clear().then(() => {
-      this.options.logger?.info('SessionService', `logout`);
+      this.options.logger?.info('SessionService', 'logout');
 
       return this.destroyModules();
     });
-  }
+  };
 
   public addModule = (module: ISessionModule): void => {
     this.modules.push(module);
-  }
+  };
 
   private createSession = (token: AnyAuthenticationToken): ISession => {
     return { userId: token.userId, secret: token.secret };
-  }
+  };
 
   private initializeModules = (session: ISession): Promise<void> => {
     const moduleInitPromises = this.modules.map(module => module.initialize(session));
@@ -139,9 +140,10 @@ export class SessionService implements ISessionService {
       .then(() => {/** no-op */})
       .catch(error => {
         this.options.logger?.error('SessionService', `Failed to initialize modules: ${error.message}`);
+
         return Promise.reject(error);
       });
-  }
+  };
 
   private destroyModules = (): Promise<void> => {
     const moduleDestroyPromises = this.modules.map(module => module.destroy());
@@ -150,9 +152,10 @@ export class SessionService implements ISessionService {
       .then(() => {/** no-op */})
       .catch(error => {
         this.options.logger?.error('SessionService', `Failed to destroy modules: ${error.message}`);
+
         return Promise.reject(error);
       });
-  }
+  };
 
   private getExpiresInMinutes = (token: AnyAuthenticationToken): number => {
     const expiresInMinutes: number = (token.expiresAt - Date.now()) / 60000;

@@ -98,7 +98,7 @@ describe('Log Service', () => {
   });
 
   it('should add default labels to all logs', () => {
-    logService = new LogService({ 
+    logService = new LogService({
       defaultLabels: { app: 'test', version: '1.0.0' },
       transporters: [transporter2],
     });
@@ -111,9 +111,9 @@ describe('Log Service', () => {
       expect.objectContaining({ app: 'test', version: '1.0.0' }),
     );
   });
-  
+
   it('should add custom labels', () => {
-    logService = new LogService({ 
+    logService = new LogService({
       defaultLabels: { app: 'test', version: '1.0.0' },
       transporters: [transporter2],
     });
@@ -130,7 +130,7 @@ describe('Log Service', () => {
   });
 
   it('should not override default labels with custom labels', () => {
-    logService = new LogService({ 
+    logService = new LogService({
       defaultLabels: { app: 'test' },
       transporters: [transporter2],
     });
@@ -147,7 +147,7 @@ describe('Log Service', () => {
   });
 
   it('should not override default labels with payload labels', () => {
-    logService = new LogService({ 
+    logService = new LogService({
       defaultLabels: { app: 'test' },
       transporters: [transporter2],
     });
@@ -162,7 +162,7 @@ describe('Log Service', () => {
   });
 
   it('should not remove default labels', () => {
-    logService = new LogService({ 
+    logService = new LogService({
       defaultLabels: { app: 'test', version: '1.0.0' },
       transporters: [transporter2],
     });
@@ -179,7 +179,7 @@ describe('Log Service', () => {
   });
 
   it('should remove custom labels', () => {
-    logService = new LogService({ 
+    logService = new LogService({
       defaultLabels: { app: 'test', version: '1.0.0' },
       transporters: [transporter2],
     });

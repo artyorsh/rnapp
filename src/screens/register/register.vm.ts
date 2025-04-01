@@ -1,8 +1,8 @@
-import { INavigationService } from '../../service/navigation/model';
-import { IRegisterVM } from './register.component';
 import { INavigationScreenLifecycle } from '../../service/navigation/components/navigation-screen.container';
-import { IRegisterFormValues } from './components/register-form.component';
+import { INavigationService } from '../../service/navigation/model';
 import { ISessionService } from '../../service/session/model';
+import { IRegisterFormValues } from './components/register-form.component';
+import { IRegisterVM } from './register.component';
 
 export interface IRegisterOptions {
   session: ISessionService;
@@ -21,17 +21,16 @@ export class RegisterVM implements IRegisterVM {
     this.navigation = options.navigation;
   }
 
-  
   public submit = (values: IRegisterFormValues): void => {
     this.session.register(values.email, values.password).then(() => {
       this.navigation.replace('/home');
     }).catch(() => {
       /* no-op */
     });
-  }
+  };
 
   public goBack = (): void => {
     this.navigation.goBack();
-  }
+  };
 
 }

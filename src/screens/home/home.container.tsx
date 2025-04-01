@@ -1,8 +1,9 @@
 import React from 'react';
-import { IHomeVM, Home } from './home.component';
-import { HomeVM } from './home.vm';
-import { NavigationScreenContainer, NavigationScreenProps } from '../../service/navigation/components/navigation-screen.container';
+
 import { AppModule, container } from '../../di/container';
+import { NavigationScreenContainer, NavigationScreenProps } from '../../service/navigation/components/navigation-screen.container';
+import { Home, IHomeVM } from './home.component';
+import { HomeVM } from './home.vm';
 
 export class HomeContainer extends NavigationScreenContainer {
 

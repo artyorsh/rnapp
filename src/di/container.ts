@@ -7,7 +7,7 @@ export enum AppModule {
   NAVIGATION = 'navigation',
   LOG = 'log',
   SESSION = 'session',
-  USER = 'user',
+  USER = 'user'
 }
 
 export const container = new Container({ defaultScope: 'Singleton' });

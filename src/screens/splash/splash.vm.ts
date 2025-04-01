@@ -1,7 +1,7 @@
-import { INavigationService } from '../../service/navigation/model';
 import { INavigationScreenLifecycle, INavigationScreenLifecycleListener } from '../../service/navigation/components/navigation-screen.container';
-import { ISplashVM } from './splash.component';
+import { INavigationService } from '../../service/navigation/model';
 import { ISessionService } from '../../service/session/model';
+import { ISplashVM } from './splash.component';
 
 export interface ISplashOptions {
   navigation: INavigationService;
@@ -19,7 +19,7 @@ export class SplashVM implements ISplashVM, INavigationScreenLifecycleListener {
     this.navigation = options.navigation;
     this.session = options.session;
 
-    lifecycle.subscribe(this)
+    lifecycle.subscribe(this);
   }
 
   public onMount = (): void => {
@@ -28,5 +28,5 @@ export class SplashVM implements ISplashVM, INavigationScreenLifecycleListener {
     }).catch(() => {
       this.navigation.replace('/welcome');
     });
-  }
+  };
 }

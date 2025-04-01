@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { observer } from 'mobx-react';
 
-import { SafeArea } from '../../components/safe-area.component';
 import { Button } from '../../components/button.component';
+import { SafeArea } from '../../components/safe-area.component';
 import { Text } from '../../components/text.component';
 
 export interface IWelcomeVM {
@@ -17,7 +17,7 @@ export const Welcome: React.FC<{ vm: IWelcomeVM }> = observer(({ vm }) => {
   return (
     <SafeArea>
       <View style={styles.container}>
-        <Text 
+        <Text
           style={styles.title}
           category='heading'>
           {vm.title}

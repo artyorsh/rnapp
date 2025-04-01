@@ -2,8 +2,8 @@ import React from 'react';
 import { NavigationContainer, NavigationContainerProps } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { StackNavigator } from './stack-navigator';
 import { AuthNavigator } from './auth-navigator';
+import { StackNavigator } from './stack-navigator';
 
 export type RootRoute =
   | '/auth'

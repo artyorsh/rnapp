@@ -1,9 +1,9 @@
 import React from 'react';
 
+import { AppModule, container } from '../../di/container';
+import { NavigationScreenContainer, NavigationScreenProps } from '../../service/navigation/components/navigation-screen.container';
 import { IRegisterVM, Register } from './register.component';
 import { RegisterVM } from './register.vm';
-import { NavigationScreenContainer, NavigationScreenProps } from '../../service/navigation/components/navigation-screen.container';
-import { AppModule, container } from '../../di/container';
 
 interface RouteParams {
 }

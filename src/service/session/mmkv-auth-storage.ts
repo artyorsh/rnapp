@@ -1,5 +1,6 @@
-import { MMKV } from "react-native-mmkv";
-import { IAuthenticationStorage, AnyAuthenticationToken } from "./session.service";
+import { MMKV } from 'react-native-mmkv';
+
+import { AnyAuthenticationToken, IAuthenticationStorage } from './session.service';
 
 export interface IKeychainAuthStorageOptions {
   encryptionKey: string;
@@ -21,7 +22,7 @@ export class MMKVAuthenticationStorage implements IAuthenticationStorage<AnyAuth
   public getToken(): Promise<AnyAuthenticationToken | null> {
     const token = this.mmkv.getString('token');
 
-    if(!token) {
+    if (!token) {
       return Promise.resolve(null);
     }
 
@@ -34,11 +35,13 @@ export class MMKVAuthenticationStorage implements IAuthenticationStorage<AnyAuth
 
   public setToken(token: AnyAuthenticationToken): Promise<void> {
     this.mmkv.set(MMKVAuthenticationStorage.KEY_TOKEN, JSON.stringify(token));
+
     return Promise.resolve();
   }
 
   public clear(): Promise<void> {
     this.mmkv.delete(MMKVAuthenticationStorage.KEY_TOKEN);
+
     return Promise.resolve();
   }
 }

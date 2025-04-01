@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleSheet, View, ViewProps } from 'react-native';
-import { Input } from '../../../components/input.component';
+
 import { Button } from '../../../components/button.component';
+import { Input } from '../../../components/input.component';
 
 export interface IRegisterFormValues {
   email: string;
@@ -9,8 +10,8 @@ export interface IRegisterFormValues {
 }
 
 interface Props extends ViewProps {
-  onSubmit: (values: IRegisterFormValues) => void;
-} 
+  onSubmit(values: IRegisterFormValues): void;
+}
 
 export const RegisterForm: React.FC<Props> = ({ onSubmit, ...props }) => {
 
@@ -19,7 +20,7 @@ export const RegisterForm: React.FC<Props> = ({ onSubmit, ...props }) => {
 
   return (
     <View {...props}>
-      <Input 
+      <Input
         testID='email-input'
         style={styles.input}
         value={email}
@@ -35,7 +36,7 @@ export const RegisterForm: React.FC<Props> = ({ onSubmit, ...props }) => {
         secureTextEntry={true}
         onChangeText={setPassword}
       />
-      <Button 
+      <Button
         testID='submit-button'
         style={styles.submitButton}
         title='Register'

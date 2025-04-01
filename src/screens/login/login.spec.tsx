@@ -1,7 +1,9 @@
-import { fireEvent, render, waitFor } from "@testing-library/react-native";
-import { ILoginVM, Login } from "./login.component";
-import { ILoginOptions, LoginVM } from "./login.vm";
-import { INavigationScreenLifecycle } from "../../service/navigation/components/navigation-screen.container";
+import React from 'react';
+import { fireEvent, render, waitFor } from '@testing-library/react-native';
+
+import { INavigationScreenLifecycle } from '../../service/navigation/components/navigation-screen.container';
+import { ILoginVM, Login } from './login.component';
+import { ILoginOptions, LoginVM } from './login.vm';
 
 describe('Login Component', () => {
 

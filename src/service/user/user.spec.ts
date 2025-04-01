@@ -1,7 +1,7 @@
-import { ILogService } from "../log/model";
-import { ISessionService } from "../session/model";
-import { IUserService } from "./model";
-import { UserService } from "./user.service";
+import { ILogService } from '../log/model';
+import { ISessionService } from '../session/model';
+import { IUserService } from './model';
+import { UserService } from './user.service';
 
 jest.unmock('./user.service');
 
@@ -34,6 +34,7 @@ describe('UserService', () => {
 
     sessionService.addModule = jest.fn(module => {
       initializationPromise = module.initialize({ userId: '1', secret: '123' });
+
       return initializationPromise;
     });
 
@@ -56,6 +57,7 @@ describe('UserService', () => {
 
     sessionService.addModule = jest.fn(module => {
       initializationPromise = module.initialize({ userId: '1', secret: '123' });
+
       return initializationPromise;
     });
 

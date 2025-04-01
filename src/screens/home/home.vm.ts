@@ -1,10 +1,10 @@
 import { computed } from 'mobx';
 
-import { IHomeVM } from './home.component';
 import { INavigationScreenLifecycle } from '../../service/navigation/components/navigation-screen.container';
-import { ISessionService } from '../../service/session/model';
 import { INavigationService } from '../../service/navigation/model';
+import { ISessionService } from '../../service/session/model';
 import { IUserService } from '../../service/user/model';
+import { IHomeVM } from './home.component';
 
 export interface IHomeOptions {
   session: ISessionService;
@@ -34,5 +34,5 @@ export class HomeVM implements IHomeVM {
     }).catch(() => {
       /* no-op */
     });
-  }
+  };
 }

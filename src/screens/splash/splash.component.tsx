@@ -14,7 +14,7 @@ export const Splash: React.FC<{ vm: ISplashVM }> = observer(({ vm }) => {
   return (
     <SafeArea style={styles.safeArea}>
       <View style={styles.container}>
-        <Text 
+        <Text
           style={styles.title}
           category='heading'>
           {vm.title}

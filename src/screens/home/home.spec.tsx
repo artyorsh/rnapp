@@ -1,8 +1,10 @@
-import { fireEvent, render, waitFor } from "@testing-library/react-native";
-import { Home, IHomeVM } from "./home.component";
-import { IHomeOptions } from "./home.vm";
-import { HomeVM } from "./home.vm";
-import { INavigationScreenLifecycle } from "../../service/navigation/components/navigation-screen.container";
+import React from 'react';
+import { fireEvent, render, waitFor } from '@testing-library/react-native';
+
+import { INavigationScreenLifecycle } from '../../service/navigation/components/navigation-screen.container';
+import { Home, IHomeVM } from './home.component';
+import { IHomeOptions } from './home.vm';
+import { HomeVM } from './home.vm';
 
 describe('Home', () => {
 

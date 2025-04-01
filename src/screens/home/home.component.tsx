@@ -2,14 +2,14 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { observer } from 'mobx-react';
 
-import { SafeArea } from '../../components/safe-area.component';
-import { NavigationBar } from '../../components/navigation-bar/navigation-bar.component';
-import { Text } from '../../components/text.component';
 import { Button } from '../../components/button.component';
+import { NavigationBar } from '../../components/navigation-bar/navigation-bar.component';
+import { SafeArea } from '../../components/safe-area.component';
+import { Text } from '../../components/text.component';
 
 export interface IHomeVM {
   title: string;
-  logout: () => void;
+  logout(): void;
 }
 
 export const Home: React.FC<{ vm: IHomeVM }> = observer(({ vm }) => {

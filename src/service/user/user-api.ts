@@ -1,5 +1,5 @@
-import { IUser } from "./model";
-import { IUserRepository } from "./user.service";
+import { IUser } from './model';
+import { IUserRepository } from './user.service';
 
 export class UserApi implements IUserRepository {
 
@@ -12,5 +12,5 @@ export class UserApi implements IUserRepository {
         });
       }, 1000);
     });
-  }
+  };
 }

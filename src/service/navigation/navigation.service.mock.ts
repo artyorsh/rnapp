@@ -1,4 +1,4 @@
-import { INavigationService } from "./model";
+import { INavigationService } from './model';
 
 jest.mock('./navigation.service', () => {
   const navigationService: INavigationService = {
