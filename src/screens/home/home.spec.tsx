@@ -3,7 +3,7 @@ import { fireEvent, render, waitFor } from '@testing-library/react-native';
 
 import { INavigationScreenLifecycle } from '../../service/navigation/components/navigation-screen.container';
 import { Home, IHomeVM } from './home.component';
-import { IHomeOptions } from './home.vm';
+import { IHomeAPI, IHomeOptions } from './home.vm';
 import { HomeVM } from './home.vm';
 
 describe('Home', () => {
@@ -15,11 +15,17 @@ describe('Home', () => {
     subscribe: jest.fn(listener => listener.onMount?.()),
   };
 
+  const dataProvider: IHomeAPI = {
+    getPosts: jest.fn(() => Promise.resolve([])),
+  };
+
   beforeEach(() => {
     deps = {
       session: jest.requireMock('../../service/session/session.service').SessionService(),
       navigation: jest.requireMock('../../service/navigation/navigation.service').NavigationService(),
       user: jest.requireMock('../../service/user/user.service').UserService(),
+      api: dataProvider,
+      logger: jest.requireMock('../../service/log/log.service').LogService(),
     };
     vm = new HomeVM(lifecycle, deps);
   });

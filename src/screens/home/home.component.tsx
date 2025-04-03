@@ -1,31 +1,26 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { observer } from 'mobx-react';
 
-import { Button } from '../../components/button.component';
-import { NavigationBar } from '../../components/navigation-bar/navigation-bar.component';
+import { Loading } from '../../components/loading.component';
 import { SafeArea } from '../../components/safe-area.component';
-import { Text } from '../../components/text.component';
+import { IPostsListVM, PostsList } from './posts-list/posts-list.component';
+import { IWelcomeHeaderVM, WelcomeHeader } from './welcome-header/welcome-header.component';
 
 export interface IHomeVM {
-  title: string;
-  logout(): void;
+  loading: boolean;
+  welcomeHeader: IWelcomeHeaderVM;
+  posts: IPostsListVM;
 }
 
 export const Home: React.FC<{ vm: IHomeVM }> = observer(({ vm }) => {
+
   return (
     <SafeArea style={styles.safeArea}>
-      <NavigationBar />
-      <View style={styles.container}>
-        <Text category='heading'>
-          {vm.title}
-        </Text>
-        <Button
-          testID='logout-button'
-          title='Logout'
-          onPress={vm.logout}
-        />
-      </View>
+      <WelcomeHeader vm={vm.welcomeHeader} />
+      <Loading loading={vm.loading}>
+        <PostsList vm={vm.posts} />
+      </Loading>
     </SafeArea>
   );
 });
@@ -33,10 +28,5 @@ export const Home: React.FC<{ vm: IHomeVM }> = observer(({ vm }) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
