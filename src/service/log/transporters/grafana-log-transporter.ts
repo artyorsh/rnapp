@@ -22,7 +22,7 @@ export class GrafanaLogTransporter implements ILogTransporter {
       body: JSON.stringify({
         streams: [
           {
-            stream: { tag, level: options?.level || 'debug' },
+            stream: { ...options, tag, level: options?.level || 'debug' },
             values: [[timestampNs.toString(), `[${tag}] ${message}`]],
           },
         ],
