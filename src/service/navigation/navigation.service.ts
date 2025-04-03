@@ -48,7 +48,7 @@ export class NavigationService implements INavigationService {
     const nextRoute = this.rootNavigator.current?.getCurrentRoute() as Route<IRoute> | undefined;
 
     if (nextRoute && nextRoute.name !== this.currentRoute) {
-      this.log.debug('NavigationService', `Moving from ${this.currentRoute} to ${nextRoute.name}`);
+      this.log.info('NavigationService', `Moving from ${this.currentRoute} to ${nextRoute.name}`);
       this.currentRoute = nextRoute.name as IRoute;
     }
   };
