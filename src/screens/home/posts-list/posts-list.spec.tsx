@@ -49,7 +49,7 @@ describe('PostsList', () => {
 
   beforeEach(() => {
     deps = {
-      logger: jest.requireMock('../../../service/log/log.service').LogService(),
+      logger: jest.requireMock('@service/log/log.service').LogService(),
     };
     vm = new PostsListVM([], deps);
   });

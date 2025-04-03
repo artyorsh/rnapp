@@ -1,7 +1,7 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { HomeContainer } from '../../../screens/home/home.container';
+import { HomeContainer } from '@screens/home/home.container';
 
 export type StackRoute =
   | '/home';

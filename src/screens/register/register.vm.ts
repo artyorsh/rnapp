@@ -1,6 +1,7 @@
-import { INavigationScreenLifecycle } from '../../service/navigation/components/navigation-screen.container';
-import { INavigationService } from '../../service/navigation/model';
-import { ISessionService } from '../../service/session/model';
+import { INavigationScreenLifecycle } from '@service/navigation/components/navigation-screen.container';
+import { INavigationService } from '@service/navigation/model';
+import { ISessionService } from '@service/session/model';
+
 import { IRegisterFormValues } from './components/register-form.component';
 import { IRegisterVM } from './register.component';
 

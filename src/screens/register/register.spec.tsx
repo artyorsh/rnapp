@@ -1,7 +1,8 @@
 import React from 'react';
 import { fireEvent, render, waitFor } from '@testing-library/react-native';
 
-import { INavigationScreenLifecycle } from '../../service/navigation/components/navigation-screen.container';
+import { INavigationScreenLifecycle } from '@service/navigation/components/navigation-screen.container';
+
 import { IRegisterVM, Register } from './register.component';
 import { IRegisterOptions, RegisterVM } from './register.vm';
 
@@ -52,8 +53,8 @@ describe('Register VM', () => {
   };
 
   const deps: IRegisterOptions = {
-    session: jest.requireMock('../../service/session/session.service').SessionService(),
-    navigation: jest.requireMock('../../service/navigation/navigation.service').NavigationService(),
+    session: jest.requireMock('@service/session/session.service').SessionService(),
+    navigation: jest.requireMock('@service/navigation/navigation.service').NavigationService(),
   };
 
   beforeEach(() => {

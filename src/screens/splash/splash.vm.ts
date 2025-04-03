@@ -1,6 +1,7 @@
-import { INavigationScreenLifecycle, INavigationScreenLifecycleListener } from '../../service/navigation/components/navigation-screen.container';
-import { INavigationService } from '../../service/navigation/model';
-import { ISessionService } from '../../service/session/model';
+import { INavigationScreenLifecycle, INavigationScreenLifecycleListener } from '@service/navigation/components/navigation-screen.container';
+import { INavigationService } from '@service/navigation/model';
+import { ISessionService } from '@service/session/model';
+
 import { ISplashVM } from './splash.component';
 
 export interface ISplashOptions {

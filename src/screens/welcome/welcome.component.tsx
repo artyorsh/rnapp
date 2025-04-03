@@ -2,9 +2,9 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { observer } from 'mobx-react';
 
-import { Button } from '../../components/button.component';
-import { SafeArea } from '../../components/safe-area.component';
-import { Text } from '../../components/text.component';
+import { Button } from '@components/button.component';
+import { SafeArea } from '@components/safe-area.component';
+import { Text } from '@components/text.component';
 
 export interface IWelcomeVM {
   title: string;

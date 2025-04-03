@@ -1,10 +1,11 @@
 import { computed, makeAutoObservable, observable } from 'mobx';
 
-import { ILogService } from '../../service/log/model';
-import { INavigationScreenLifecycle, INavigationScreenLifecycleListener } from '../../service/navigation/components/navigation-screen.container';
-import { INavigationService } from '../../service/navigation/model';
-import { ISessionService } from '../../service/session/model';
-import { IUserService } from '../../service/user/model';
+import { ILogService } from '@service/log/model';
+import { INavigationScreenLifecycle, INavigationScreenLifecycleListener } from '@service/navigation/components/navigation-screen.container';
+import { INavigationService } from '@service/navigation/model';
+import { ISessionService } from '@service/session/model';
+import { IUserService } from '@service/user/model';
+
 import { IHomeVM } from './home.component';
 import { IPost } from './posts-list/model';
 import { IPostsListVM } from './posts-list/posts-list.component';

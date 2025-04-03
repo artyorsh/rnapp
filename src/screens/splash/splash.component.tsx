@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { observer } from 'mobx-react';
 
-import { SafeArea } from '../../components/safe-area.component';
-import { Text } from '../../components/text.component';
+import { SafeArea } from '@components/safe-area.component';
+import { Text } from '@components/text.component';
 
 export interface ISplashVM {
   title: string;

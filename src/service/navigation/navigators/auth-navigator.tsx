@@ -1,10 +1,10 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { LoginContainer } from '../../../screens/login/login.container';
-import { RegisterContainer } from '../../../screens/register/register.container';
-import { SplashContainer } from '../../../screens/splash/splash.container';
-import { WelcomeContainer } from '../../../screens/welcome/welcome.container';
+import { LoginContainer } from '@screens/login/login.container';
+import { RegisterContainer } from '@screens/register/register.container';
+import { SplashContainer } from '@screens/splash/splash.container';
+import { WelcomeContainer } from '@screens/welcome/welcome.container';
 
 export type AuthRoute =
   | '/'

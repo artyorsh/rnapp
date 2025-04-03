@@ -1,8 +1,8 @@
 import React from 'react';
 import { Image, ImageSourcePropType, StyleSheet, View, ViewProps } from 'react-native';
 
-import { Card } from '../../../components/card.component';
-import { Text } from '../../../components/text.component';
+import { Card } from '@components/card.component';
+import { Text } from '@components/text.component';
 
 interface Props extends ViewProps {
   vm: IPostVM;

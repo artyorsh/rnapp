@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { AppModule, container } from '../../di/container';
-import { NavigationScreenContainer, NavigationScreenProps } from '../../service/navigation/components/navigation-screen.container';
+import { AppModule, container } from '@di/container';
+import { NavigationScreenContainer, NavigationScreenProps } from '@service/navigation/components/navigation-screen.container';
+
 import { ILoginVM, Login } from './login.component';
 import { LoginVM } from './login.vm';
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, View, ViewProps } from 'react-native';
 
-import { Button } from '../../../components/button.component';
-import { Text } from '../../../components/text.component';
+import { Button } from '@components/button.component';
+import { Text } from '@components/text.component';
 
 interface Props extends ViewProps {
   vm: IWelcomeHeaderVM;

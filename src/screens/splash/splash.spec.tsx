@@ -1,7 +1,8 @@
 import React from 'react';
 import { render, waitFor } from '@testing-library/react-native';
 
-import { INavigationScreenLifecycle } from '../../service/navigation/components/navigation-screen.container';
+import { INavigationScreenLifecycle } from '@service/navigation/components/navigation-screen.container';
+
 import { ISplashVM, Splash } from './splash.component';
 import { ISplashOptions, SplashVM } from './splash.vm';
 
@@ -16,8 +17,8 @@ describe('Splash', () => {
 
   beforeEach(() => {
     deps = {
-      navigation: jest.requireMock('../../service/navigation/navigation.service').NavigationService(),
-      session: jest.requireMock('../../service/session/session.service').SessionService(),
+      navigation: jest.requireMock('@service/navigation/navigation.service').NavigationService(),
+      session: jest.requireMock('@service/session/session.service').SessionService(),
     };
     vm = new SplashVM(lifecycle, deps);
   });

@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, View, ViewProps } from 'react-native';
 
-import { Button } from '../../../components/button.component';
-import { Input } from '../../../components/input.component';
+import { Button } from '@components/button.component';
+import { Input } from '@components/input.component';
 
 export interface ILoginFormValues {
   email: string;

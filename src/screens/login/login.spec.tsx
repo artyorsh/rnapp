@@ -1,7 +1,8 @@
 import React from 'react';
 import { fireEvent, render, waitFor } from '@testing-library/react-native';
 
-import { INavigationScreenLifecycle } from '../../service/navigation/components/navigation-screen.container';
+import { INavigationScreenLifecycle } from '@service/navigation/components/navigation-screen.container';
+
 import { ILoginVM, Login } from './login.component';
 import { ILoginOptions, LoginVM } from './login.vm';
 
@@ -74,8 +75,8 @@ describe('Login VM', () => {
   let vm: ILoginVM;
 
   const deps: ILoginOptions = {
-    session: jest.requireMock('../../service/session/session.service').SessionService(),
-    navigation: jest.requireMock('../../service/navigation/navigation.service').NavigationService(),
+    session: jest.requireMock('@service/session/session.service').SessionService(),
+    navigation: jest.requireMock('@service/navigation/navigation.service').NavigationService(),
   };
 
   beforeEach(() => {

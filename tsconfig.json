@@ -1,7 +1,14 @@
 {
   "extends": "@react-native/typescript-config/tsconfig.json",
   "compilerOptions": {
+    "baseUrl": "./",
     "experimentalDecorators": true,
+    "paths": {
+      "@di/*": ["./src/di/*"],
+      "@components/*": ["./src/components/*"],
+      "@service/*": ["./src/service/*"],
+      "@screens/*": ["./src/screens/*"]
+    },
     "types": [
       "react-native",
       "jest",

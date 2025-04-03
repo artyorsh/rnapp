@@ -1,5 +1,6 @@
-import { INavigationScreenLifecycle } from '../../service/navigation/components/navigation-screen.container';
-import { INavigationService } from '../../service/navigation/model';
+import { INavigationScreenLifecycle } from '@service/navigation/components/navigation-screen.container';
+import { INavigationService } from '@service/navigation/model';
+
 import { IWelcomeVM } from './welcome.component';
 
 interface IWelcomeOptions {
